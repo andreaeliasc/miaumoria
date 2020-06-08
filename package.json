@@ -6,11 +6,18 @@
   "scripts": {
     "deploy": "gh-pages -d dist"
   },
-  "keyworda":[],
+  "keyworda": [],
   "author": "",
   "license": "ISC",
   "homepage": "https://eli17048.github.io/miaumoria",
   "dependencies": {
-    "gh-pages":"^1.2.0"
+    "gh-pages": "^1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eli17048/miaumoria.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eli17048/miaumoria/issues"
   }
 }
