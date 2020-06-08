@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Miaumory</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="miaumoriaStyle.css">
+  </head>  
+  <body class="Fondo">
+
+    <input type = "button" value="" onclick="play()">
+    <audio id="audio" src="Kitten Meow-SoundBible.com-1295572573.mp3"></audio>
+    <div id="root"></div>
+
+    <input type = "button" value="" onclick="play()">
+    <audio id="audio1" src="Ta Da-SoundBible.com-1884170640.mp3"></audio>
+    <div id="root"></div>
+    
+
+    <script type="text/babel">
+
+    function play(){
+        var audio = document.getElementById("audio");
+        
+    }
+      class Counter extends React.Component{
+        constructor (props){
+          super(props)
+          this.state = {
+          
+          }
+        }
+        render(){
+          const cuadro  = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100px",
+            height: "100px",
+            color: "pink",
+            fontFamily: "arial",
+            textShadow: "2px 2px 2px #000000",
+            fontSize: "50px"
+          }
+
+          return (
+            <div style={cuadro}>
+              {this.props.contador}
+            </div>
+          )                   
+        }
+      }
+
+      class Carta extends React.Component{
+        constructor (props){
+          super(props)
+          this.state = {
+            voltear: false
+          }
+        }
+        
+        handleClick() {
+          this.props.handle(this.props.id, this.props.idPosicion)
+        }
+
+        render(){
+          const estilo  = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "black"
+
+          }
+        
+          if(this.props.volteo){
+            var frente = "frente1"
+            var back = "back1"
+            var cara1 = this.props.imagen
+          }
+          else{
+            var frente = "frente2"
+            var back = "back2"
+            var cara2 = "back"
+          }
+
+          return (
+              <div style={estilo} onClick={this.handleClick.bind(this)}>
+                <div className ={frente}>
+                  <div className={this.props.imagen}></div>
+                </div>
+                <div className ={back}>
+                  <div className="back"></div>
+                </div>
+              </div>
+          )                   
+        }
+      }
+      class Game extends React.Component {
+        constructor(props) {
+          super(props)
+
+          this.state = {
+            arrayrandom: [],
+            arrayFijo: [],
+            arrayImagenes: [],
+            elegidas: [],
+            posicionesElegidas: [],
+            correctas: [],
+            turn: [],
+            validacion: null,
+            counter: 0
+            
+          }
+          this.mezclar()
+        }
+
+        mezclar(){
+         
+          this.state.arrayFijo = [0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7]
+          this.state.arrayImagenes = ["imagen1","imagen2","imagen3","imagen4","imagen5","imagen6","imagen7","imagen8"]
+         
+          let arrayAlea = []
+          let arrayVolteo = []
+         
+          while(this.state.arrayFijo.length>0){
+           
+            var array = this.state.arrayFijo.splice(Math.floor(Math.random() * this.state.arrayFijo.length), 1)
+            array = array[0]
+            arrayAlea.push(array)
+          }
+          this.state.arrayrandom = [...arrayAlea]
+          for(let i = 0; i<16; i++){
+            arrayVolteo.push(false)
+          }
+         
+          this.state.turn = [...arrayVolteo]
+
+        }
+
+        handleCardClick(id, posicion){
+            audio.play();
+          if(this.state.elegidas.length < 2 && posicion != this.state.validacion && !this.state.correctas.includes(id)){
+            audio.play();
+            var v = this.state.turn
+            var posicionesEle = this.state.posicionesElegidas
+
+            v[posicion] = true
+            
+            this.setState({
+              turn: v,
+              validacion: posicion
+             
+            })
+
+            var choosed = this.state.elegidas
+            choosed.push(id)
+            posicionesEle.push(posicion)
+            audio.play();
+
+            this.setState({
+              elegidas: choosed,
+              posicionesElegidas: posicionesEle
+            })            
+            //console.log("Espero")
+            if(choosed.length != 2){
+
+            }
+            else{
+              this.setState({
+                counter: this.state.counter + 1
+              })
+              if(choosed[0] == choosed[1] && choosed[0] != null && choosed[1] != null){
+                var good = this.state.correctas
+                good.push(id)
+                this.setState({
+                  correctas: good
+                })
+                //console.log(this.state.correctas)
+                this.setState({
+                    elegidas: [],
+                    posicionesElegidas: [],
+                    validacion: null
+                })              
+                //elegidas.pop()
+                //elegidas.pop()
+                setTimeout(() => {
+                  if (good.length == 8){
+                    audio1.play();
+                  alert("Miautastico Ganaste")
+                  }else{
+
+                  }
+                },100)
+              }else{
+                setTimeout(() => {
+                  v = this.state.turn
+                  v[this.state.posicionesElegidas[0]] = false
+                  v[this.state.posicionesElegidas[1]] = false
+                  this.setState({
+                    turn: v,
+                    elegidas: [],
+                    posicionesElegidas: [],
+                    validacion: null
+                  })
+                 
+                },800)  
+              }
+            }
+          }else{
+           
+          }
+        }
+
+       
+        render(){
+          const grid = {
+            display: "grid",
+            gridTemplateColumns: "100px 100px 100px 100px",
+            gridTemplateRows: "150px 150px 150px 150px",  
+            gridColumnGap: "10px",
+            gridRowGap: "10px",
+          }
+
+          const flex = {
+            display: "flex",
+            justifyContent: "center"
+          }
+
+          const letras = {
+            display: "flex",
+            justifyContent: "center",            
+            width: "700px",
+            height: "40px",
+            fontWeight: "bold",
+            textShadow: "2px 2px 2px #000000",
+            color: "#DB7093",
+            fontFamily: "arial",
+            fontSize: "45px"
+          }         
+         
+          return (
+            <div>
+              <div style={flex}>
+                  <div style={letras}>Miaumory</div>
+              </div>
+              <div style={flex}>
+                  <div style={letras}></div>
+              </div>
+              <div style={flex}>
+                <div style={grid}>
+                  <Carta id = {this.state.arrayrandom[0]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[0]]} idPosicion = '0' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[0]} />
+                  <Carta id = {this.state.arrayrandom[1]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[1]]} idPosicion = '1' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[1]} />
+                  <Carta id = {this.state.arrayrandom[2]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[2]]} idPosicion = '2' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[2]} />
+                  <Carta id = {this.state.arrayrandom[3]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[3]]} idPosicion = '3' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[3]} />
+                  <Carta id = {this.state.arrayrandom[4]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[4]]} idPosicion = '4' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[4]} />
+                  <Carta id = {this.state.arrayrandom[5]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[5]]} idPosicion = '5' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[5]} />
+                  <Carta id = {this.state.arrayrandom[6]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[6]]} idPosicion = '6' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[6]} />
+                  <Carta id = {this.state.arrayrandom[7]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[7]]} idPosicion = '7' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[7]} />
+                  <Carta id = {this.state.arrayrandom[8]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[8]]} idPosicion = '8' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[8]} />
+                  <Carta id = {this.state.arrayrandom[9]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[9]]} idPosicion = '9' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[9]} />
+                  <Carta id = {this.state.arrayrandom[10]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[10]]} idPosicion = '10' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[10]} />
+                  <Carta id = {this.state.arrayrandom[11]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[11]]} idPosicion = '11' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[11]} />
+                  <Carta id = {this.state.arrayrandom[12]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[12]]} idPosicion = '12' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[12]} />
+                  <Carta id = {this.state.arrayrandom[13]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[13]]} idPosicion = '13' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[13]} />
+                  <Carta id = {this.state.arrayrandom[14]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[14]]} idPosicion = '14' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[14]} />
+                  <Carta id = {this.state.arrayrandom[15]}  imagen = {this.state.arrayImagenes[this.state.arrayrandom[15]]} idPosicion = '15' handle ={this.handleCardClick.bind(this)} volteo={this.state.turn[15]} />
+                </div>
+              </div>
+              <div style={flex}>
+                <div style={letras}>Miauvimientos</div>
+              </div>
+              <div style={flex}>
+                <Counter contador = {this.state.counter} />
+              </div>
+            </div>
+          )
+        }   
+      }
+      
+
+
+    ReactDOM.render(<Game />, document.getElementById('root'))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "miaumoriaandrea",
+  "version": "1.0.0",
+  "description": "miaumoria",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  },
+  "keyworda":[],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://eli17048.github.io/miaumoria",
+  "dependencies": {
+    "gh-pages":"^1.2.0"
+  }
+}
