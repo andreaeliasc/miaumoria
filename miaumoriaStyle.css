@@ -1,0 +1,102 @@
+.back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./parteTrasera.png);
+}
+.front1{
+    cursor: pointer;
+    position: absolute;
+    transform: rotateY(0deg);
+    transition: 0.4s
+}
+.back1{
+    backface-visibility: hidden;
+    position: absolute;
+    transform: rotateY(180deg);
+    transition: 0.4s
+}
+.front2{
+    backface-visibility: hidden;
+    cursor: pointer;
+    position: absolute;
+    transform: rotateY(180deg);
+    transition: 0.4s
+}
+.back2{
+    backface-visibility: hidden;
+    position: absolute;
+    transform: rotateY(0deg);
+    transition: 0.4s
+}
+
+.imagen1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen1.jpg);
+}
+
+.imagen2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen2.jpg);
+}
+.imagen3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen3.jpg);
+}
+.imagen4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen4.jpg);
+}
+.imagen5{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen5.jpg);
+}
+.imagen6{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen6.jpg);
+}
+.imagen7{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen7.jpg);
+}
+.imagen8{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 162px;
+    background-image: url(./imagen8.jpg);
+}
+.Fondo{
+    background-image: url(./Fondo.png);
+}
